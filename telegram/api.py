@@ -2,7 +2,7 @@ import urllib2
 import json
 from datetime import datetime
 
-from exception import ObjectDecodingException
+from exception import TelegramException, ObjectDecodingException
 
 
 class TelegramUser:
@@ -407,12 +407,21 @@ class TelegramMessage:
         return obj
 
 
-class TelegramException(Exception):
-    def __init__(self, info):
-        self.info = info
+class TelegramUpdate:
+    def __init__(self, update_id, message=None):
+        self.update_id = update_id
+        self.message = message
 
-    def __str__(self):
-        return repr(self.info)
+    @staticmethod
+    def decode(j):
+        try:
+            obj = TelegramUpdate(j['update_id'])
+            if 'message' in j:
+                obj.message = TelegramMessage.decode(j['message'])
+        except KeyError:
+            raise ObjectDecodingException("TelegramUpdate", j)
+
+        return obj
 
 
 class TelegramAPI:
@@ -436,10 +445,20 @@ class TelegramAPI:
                          from_chat_id=from_chat_id, message_id=message_id))
         return TelegramMessage.decode(j)
 
+    def getUpdates(self, offset=None, limit=None, timeout=None):
+        j = TelegramAPI._sendRequest(
+            self._getUrl('getUpdates', offset=offset, limit=limit,
+                         timeout=timeout))
+        ris = []
+        for el in j:
+            ris.append(TelegramUpdate.decode(el))
+        return ris
+
     def _getUrl(self, method, **kwargs):
         url = "%sbot%s/%s?" % (TelegramAPI.TELEGRAM_URL, self._token, method)
         for key, value in kwargs.iteritems():
-            url += "%s=%s&" % (key, value)
+            if value:
+                url += "%s=%s&" % (key, value)
         return url[:-1]
 
     @staticmethod
