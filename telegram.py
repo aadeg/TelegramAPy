@@ -2,21 +2,28 @@ import urllib2
 import json
 from datetime import datetime
 
+from exception import ObjectDecodingException
+
 
 class TelegramUser:
-    def __init__(self, _id, first_name, last_name, username):
+    def __init__(self, _id, first_name, last_name=None, username=None):
         self.id = _id
         self.first_name = first_name
         self.last_name = last_name
         self.username = username
 
     @staticmethod
-    def fromJSON(j):
-        user = TelegramUser(j['id'], j['first_name'])
-        if 'last_name' in j:
-            user.last_name = j['last_name']
-        if 'username' in j:
-            user.username = j['username']
+    def decode(j):
+        try:
+            obj = TelegramUser(j['id'], j['first_name'])
+            if 'last_name' in j:
+                obj.last_name = j['last_name']
+            if 'username' in j:
+                obj.username = j['username']
+        except KeyError:
+            raise ObjectDecodingException("TelegramUser", j)
+
+        return obj
 
 
 class TelegramChat:
@@ -47,16 +54,21 @@ class TelegramChat:
         return self.type == TelegramChat.T_CHANNEL
 
     @staticmethod
-    def fromJSON(j):
-        chat = TelegramChat(j['id'], j['type'])
-        if 'title' in j:
-            chat.title = j['title']
-        if 'username' in j:
-            chat.username = j['username']
-        if 'first_name' in j:
-            chat.first_name = j['first_name']
-        if 'last_name' in j:
-            chat.last_name = j['last_name']
+    def decode(j):
+        try:
+            obj = TelegramChat(j['id'], j['type'])
+            if 'title' in j:
+                obj.title = j['title']
+            if 'username' in j:
+                obj.username = j['username']
+            if 'first_name' in j:
+                obj.first_name = j['first_name']
+            if 'last_name' in j:
+                obj.last_name = j['last_name']
+        except KeyError:
+            raise ObjectDecodingException("TelegramChat", j)
+
+        return obj
 
 
 class TelegramPhotoSize:
@@ -67,10 +79,15 @@ class TelegramPhotoSize:
         self.file_size = file_size
 
     @staticmethod
-    def fromJSON(j):
-        ps = TelegramPhotoSize(j['file_id'], j['width'], j['height'])
-        if 'file_size' in j:
-            ps.file_size = j['file_size']
+    def decode(j):
+        try:
+            obj = TelegramPhotoSize(j['file_id'], j['width'], j['height'])
+            if 'file_size' in j:
+                obj.file_size = j['file_size']
+        except KeyError:
+            raise ObjectDecodingException("TelegramPhotoSize", j)
+
+        return obj
 
 
 class TelegramAudio:
@@ -84,16 +101,21 @@ class TelegramAudio:
         self.file_size = file_size
 
     @staticmethod
-    def fromJSON(j):
-        audio = TelegramAudio(j['file_id'], j['duration'])
-        if 'performer' in j:
-            audio.performer = j['performer']
-        if 'title' in j:
-            audio.title = j['title']
-        if 'mime_type' in j:
-            audio.mime_type = j['mime_type']
-        if 'file_size' in j:
-            audio.file_size = j['file_size']
+    def decode(j):
+        try:
+            obj = TelegramAudio(j['file_id'], j['duration'])
+            if 'performer' in j:
+                obj.performer = j['performer']
+            if 'title' in j:
+                obj.title = j['title']
+            if 'mime_type' in j:
+                obj.mime_type = j['mime_type']
+            if 'file_size' in j:
+                obj.file_size = j['file_size']
+        except KeyError:
+            raise ObjectDecodingException("TelegramAudio", j)
+
+        return obj
 
 
 class TelegramDocument:
@@ -106,16 +128,176 @@ class TelegramDocument:
         self.file_size = file_size
 
     @staticmethod
-    def fromJSON(j):
-        doc = TelegramDocument(j['file_id'])
-        if 'thumb' in j:
-            doc.thumb = j['thumb']
-        if 'file_name' in j:
-            doc.file_name = j['file_name']
-        if 'mime_type' in j:
-            doc.mime_type = j['mime_type']
-        if 'file_size' in j:
-            doc.file_size = j['file_size']
+    def decode(j):
+        try:
+            obj = TelegramDocument(j['file_id'])
+            if 'thumb' in j:
+                obj.thumb = TelegramPhotoSize.deconde(j['thumb'])
+            if 'file_name' in j:
+                obj.file_name = j['file_name']
+            if 'mime_type' in j:
+                obj.mime_type = j['mime_type']
+            if 'file_size' in j:
+                obj.file_size = j['file_size']
+        except KeyError:
+            raise ObjectDecodingException("TelegramDocument", j)
+
+        return obj
+
+
+class TelegramSticker:
+    def __init__(self, file_id, width, height, thumb=None,
+                 file_size=None):
+        self.file_id = file_id
+        self.width = width
+        self.height = height
+        self.thumb = thumb
+        self.file_size = file_size
+
+    @staticmethod
+    def decode(j):
+        try:
+            obj = TelegramDocument(j['file_id'])
+            if 'thumb' in j:
+                obj.thumb = TelegramPhotoSize.deconde(j['thumb'])
+            if 'file_name' in j:
+                obj.file_name = j['file_name']
+            if 'mime_type' in j:
+                obj.mime_type = j['mime_type']
+            if 'file_size' in j:
+                obj.file_size = j['file_size']
+        except KeyError:
+            raise ObjectDecodingException("TelegramSticker", j)
+
+        return obj
+
+
+class TelegramVideo:
+    def __init__(self, file_id, width, height, duration, thumb=None,
+                 mime_type=None, file_size=None):
+        self.file_id = file_id
+        self.width = width
+        self.height = height
+        self.duration = duration
+        self.thumb = thumb
+        self.mime_type = mime_type
+        self.file_size = file_size
+
+    @staticmethod
+    def decode(j):
+        try:
+            obj = TelegramVideo(j['file_id'], j['width'], j['height'],
+                                j['duration'])
+            if 'thumb' in j:
+                obj.thumb = TelegramPhotoSize.deconde(j['thumb'])
+            if 'file_name' in j:
+                obj.file_name = j['file_name']
+            if 'mime_type' in j:
+                obj.mime_type = j['mime_type']
+            if 'file_size' in j:
+                obj.file_size = j['file_size']
+        except KeyError:
+            raise ObjectDecodingException("TelegramVideo", j)
+
+        return obj
+
+
+class TelegramVoice:
+    def __init__(self, file_id, duration, mime_type=None, file_size=None):
+        self.file_id = file_id
+        self.duration = duration
+        self.mime_type = mime_type
+        self.file_size = file_size
+
+    @staticmethod
+    def decode(j):
+        try:
+            obj = TelegramVoice(j['file_id'], j['duration'])
+            if 'mime_type' in j:
+                obj.mime_type = j['mime_type']
+            if 'file_size' in j:
+                obj.file_size = j['file_size']
+        except KeyError:
+            raise ObjectDecodingException("TelegramVoice", j)
+
+        return obj
+
+
+class TelegramContact:
+    def __init__(self, phone_number, first_name, last_name=None, user_id=None):
+        self.phone_number = phone_number
+        self.first_name = first_name
+        self.last_name = last_name
+        self.user_id = user_id
+
+    @staticmethod
+    def decode(j):
+        try:
+            obj = TelegramContact(j['phone_number'], j['first_name'])
+            if 'last_name' in j:
+                obj.last_name = j['last_name']
+            if 'user_id' in j:
+                obj.user_id = j['user_id']
+        except KeyError:
+            raise ObjectDecodingException("TelegramContact", j)
+
+        return obj
+
+
+class TelegramLocation:
+    def __init__(self, longitude, latitude):
+        self.longitude = longitude
+        self.latitude = latitude
+
+    @staticmethod
+    def decode(j):
+        try:
+            obj = TelegramLocation(j['longitude'], j['latitude'])
+        except KeyError:
+            raise ObjectDecodingException("TelegramLocation", j)
+
+        return obj
+
+
+class TelegramUserProfilePhotos:
+    def __init__(self, total_count, photos):
+        self.total_count = total_count
+        self.photos = photos
+
+    @staticmethod
+    def decode(j):
+        try:
+            photos = []
+            for i in j['photos']:
+                for k in i:
+                    photos.append(TelegramPhotoSize.deconde(k))
+
+            obj = TelegramUserProfilePhotos(j['total_count'], photos)
+        except KeyError:
+            raise ObjectDecodingException("TelegramUserProfilePhotos", j)
+
+        return obj
+
+
+class TelegramFile:
+    def __init__(self, file_id, file_size=None, file_path=None):
+        self.file_id = file_id
+        self.file_size = file_size
+        self.file_path = file_path
+
+    @staticmethod
+    def decode(j):
+        try:
+            obj = TelegramFile(j['file_id'])
+            if 'file_size' in j:
+                obj.file_size = j['file_size']
+            if 'file_path' in j:
+                obj.file_path = j['file_path']
+        except KeyError:
+            raise ObjectDecodingException("TelegramFile", j)
+
+        return obj
+
 
 class TelegramMessage:
     def __init__(self, message_id, date, chat, from_=None, forward_from=None,
@@ -157,64 +339,72 @@ class TelegramMessage:
         self.migrate_to_chat_id = migrate_to_chat_id
         self.migrate_from_chat_id = migrate_from_chat_id
 
-        @staticmethod
-        def fromJSON(j):
-            chat = TelegramChat.fromJSON(j['chat'])
+    @staticmethod
+    def decode(j):
+        try:
+            chat = TelegramChat.decode(j['chat'])
             date = datetime.fromtimestamp(j['date'])
-            msg = TelegramMessage(j['message_id'], date, chat)
+            obj = TelegramMessage(j['message_id'], date, chat)
             if 'from' in j:
-                msg.from_ = TelegramUser.fromJSON(j['from'])
+                obj.from_ = TelegramUser.decode(j['from'])
             if 'forward_from' in j:
-                msg.forward_from = TelegramUser.fromJSON(j['forward_from'])
+                obj.forward_from = TelegramUser.decode(j['forward_from'])
             if 'forward_date' in j:
-                msg.forward_date = datetime.fromtimestamp(j['forward_date'])
+                obj.forward_date = datetime.fromtimestamp(
+                    j['forward_date'])
             if 'reply_to_message' in j:
-                msg.reply_to_message = TelegramMessage.fromJSON(j['reply_to_message'])
+                obj.reply_to_message = TelegramMessage.decode(
+                    j['reply_to_message'])
             if 'text' in j:
-                msg.text = j['text']
+                obj.text = j['text']
             if 'audio' in j:
-                msg.audio = TelegramAudio.fromJSON(j['audio'])
+                obj.audio = TelegramAudio.decode(j['audio'])
             if 'document' in j:
-                msg.document = TelegramDocument.fromJSON(j['document'])
+                obj.document = TelegramDocument.decode(j['document'])
             if 'photo' in j:
-                msg.photo = []
+                obj.photo = []
                 for el in j['photo']:
-                    msg.photo.append(TelegramPhotoSize.fromJSON(el))
+                    obj.photo.append(TelegramPhotoSize.decode(el))
             if 'sticker' in j:
-                msg.sticker = TelegramSticker.fromJSON(j['sticker'])
+                obj.sticker = TelegramSticker.decode(j['sticker'])
             if 'video' in j:
-                msg.video = TelegramVideo.fromJSON(j['video'])
+                obj.video = TelegramVideo.decode(j['video'])
             if 'voice' in j:
-                msg.voice = TelgramVoice.fromJSON(j['voice'])
+                obj.voice = TelegramVoice.decode(j['voice'])
             if 'caption' in j:
-                msg.caption = j['caption']
+                obj.caption = j['caption']
             if 'contact' in j:
-                msg.contact = TelegramContact.fromJSON(j['contact'])
+                obj.contact = TelegramContact.decode(j['contact'])
             if 'location' in j:
-                msg.location = TelegramLocation.fromJSON(j['location'])
+                obj.location = TelegramLocation.decode(j['location'])
             if 'new_chat_partecipant' in j:
-                msg.new_chat_partecipant = TelegramUser.fromJSON(j['new_chat_partecipant'])
+                obj.new_chat_partecipant = TelegramUser.decode(
+                    j['new_chat_partecipant'])
             if 'left_chat_partecipant' in j:
-                msg.left_chat_partecipant = TelegramUser.fromJSON(j['left_chat_partecipant'])
+                obj.left_chat_partecipant = TelegramUser.decode(
+                    j['left_chat_partecipant'])
             if 'new_chat_title' in j:
-                msg.new_chat_title = j['new_chat_title']
+                obj.new_chat_title = j['new_chat_title']
             if 'new_chat_photo' in j:
-                msg.new_chat_photo = []
+                obj.new_chat_photo = []
                 for el in j['new_chat_photo']:
-                    msg.new_chat_photo.append(TelegramPhotoSize.fromJSON(el))
+                    obj.new_chat_photo.append(TelegramPhotoSize.decode(el))
             if 'delete_chat_photo' in j:
-                msg.delete_chat_photo = j['delete_chat_photo']
+                obj.delete_chat_photo = j['delete_chat_photo']
             if 'group_chat_created' in j:
-                msg.group_chat_created = j['group_chat_created']
+                obj.group_chat_created = j['group_chat_created']
             if 'supergroup_chat_created' in j:
-                msg.supergroup_chat_created = j['supergroup_chat_created']
+                obj.supergroup_chat_created = j['supergroup_chat_created']
             if 'channel_chat_created' in j:
-                msg.channel_chat_created = j['channel_chat_created']
+                obj.channel_chat_created = j['channel_chat_created']
             if 'migrate_to_chat_id' in j:
-                msg.migrate_to_chat_id = j['migrate_to_chat_id']
+                obj.migrate_to_chat_id = j['migrate_to_chat_id']
             if 'migrate_from_chat_id' in j:
-                msg.migrate_from_chat_id = j['migrate_from_chat_id']
+                obj.migrate_from_chat_id = j['migrate_from_chat_id']
+        except KeyError:
+            raise ObjectDecodingException("TelegramMessage", j)
 
+        return obj
 
 
 class TelegramException(Exception):
@@ -233,15 +423,28 @@ class TelegramAPI:
 
     def getMe(self):
         json = TelegramAPI._sendRequest(self._getUrl('getMe'))
-        return TelegramUser.fromJSON(json)
+        return TelegramUser.decode(json)
 
     def sendMessage(self, chat_id, text):
-        params = {'chat_id': chat_id, 'text': text}
-        return TelegramAPI._sendRequest(self._getUrl('sendMessage', params))
+        j = TelegramAPI._sendRequest(
+            self._getUrl('sendMessage', chat_id=chat_id, text=text))
+        return TelegramMessage.decode(j)
 
-    def _getUrl(self, method, params={}):
+    def forwardMessage(self, chat_id, from_chat_id, message_id):
+        j = TelegramAPI._sendRequest(
+            self._getUrl('forwardMessage', chat_id=chat_id,
+                         from_chat_id=from_chat_id, message_id=message_id))
+        return TelegramMessage.decode(j)
+
+    def sendPhoto(self, chat_id, from_chat_id, message_id):
+        j = TelegramAPI._sendRequest(
+            self._getUrl('sendPhoto', chat_id=chat_id,
+                         from_chat_id=from_chat_id, message_id=message_id))
+        return TelegramMessage.decode(j)
+
+    def _getUrl(self, method, **kwargs):
         url = "%sbot%s/%s?" % (TelegramAPI.TELEGRAM_URL, self._token, method)
-        for key, value in params.iteritems():
+        for key, value in kwargs.iteritems():
             url += "%s=%s&" % (key, value)
         return url[:-1]
 
@@ -252,3 +455,5 @@ class TelegramAPI:
 
         if 'ok' not in j or not j['ok']:
             raise TelegramException(j)
+
+        return j['result']
