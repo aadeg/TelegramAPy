@@ -436,12 +436,6 @@ class TelegramAPI:
                          from_chat_id=from_chat_id, message_id=message_id))
         return TelegramMessage.decode(j)
 
-    def sendPhoto(self, chat_id, from_chat_id, message_id):
-        j = TelegramAPI._sendRequest(
-            self._getUrl('sendPhoto', chat_id=chat_id,
-                         from_chat_id=from_chat_id, message_id=message_id))
-        return TelegramMessage.decode(j)
-
     def _getUrl(self, method, **kwargs):
         url = "%sbot%s/%s?" % (TelegramAPI.TELEGRAM_URL, self._token, method)
         for key, value in kwargs.iteritems():
