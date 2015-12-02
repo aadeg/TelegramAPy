@@ -1,4 +1,4 @@
-from telegram.exception import ObjectDecodingException
+import json
 
 
 class ReplayKeyboardHide:
@@ -6,13 +6,9 @@ class ReplayKeyboardHide:
         self.hide_keyboard = hide_keyboard
         self.selective = selective
 
-    @staticmethod
-    def decode(j):
-        try:
-            obj = ReplayKeyboardHide(j['hide_keyboard'])
-            if 'selective' in j:
-                obj.selective = j['selective']
-        except KeyError:
-            raise ObjectDecodingException("ReplayKeyboardHide", j)
+    def encode(self):
+        out = {'hide_keyboard': self.hide_keyboard}
+        if self.selective:
+            out['selective'] = self.selective
 
-        return obj
+        return json.dumps(out)

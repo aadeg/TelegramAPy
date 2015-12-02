@@ -17,9 +17,14 @@ class TelegramAPI:
 
     def sendMessage(self, chat_id, text, parse_mode=None,
                     disable_web_page_preview=None, reply_to_message_id=None,
-                    replay_markup=None):
-        j = TelegramAPI._sendRequest(self._getUrl('sendMessage'),
-                                     chat_id=chat_id, text=text)
+                    reply_markup=None):
+        rep_markup = reply_markup.encode() if reply_markup else None
+        j = TelegramAPI._sendRequest(
+                self._getUrl('sendMessage'), chat_id=chat_id, text=text,
+                parse_mode=parse_mode, reply_to_message_id=reply_to_message_id,
+                disable_web_page_preview=disable_web_page_preview,
+                reply_markup=rep_markup)
+
         return Message.decode(j)
 
     def forwardMessage(self, chat_id, from_chat_id, message_id):
@@ -156,11 +161,16 @@ class TelegramAPI:
 
     @staticmethod
     def _sendRequest(url, files={}, is_file_path=True, **kwargs):
+        data = {}
+        for key, value in kwargs.iteritems():
+            if value:
+                data[key] = value
+
         if is_file_path:
-            req = requests.post(url, files=files, data=kwargs)
+            req = requests.post(url, files=files, data=data)
         else:
             kwargs.update(files)
-            req = requests.post(url, data=kwargs)
+            req = requests.post(url, data=data)
         j = req.json()
 
         if 'ok' not in j or not j['ok']:

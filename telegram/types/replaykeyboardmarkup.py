@@ -1,4 +1,4 @@
-from telegram.exception import ObjectDecodingException
+import json
 
 
 class ReplayKeyboardMarkup:
@@ -9,17 +9,11 @@ class ReplayKeyboardMarkup:
         self.one_time_keyboard = one_time_keyboard
         self.selective = selective
 
-    @staticmethod
-    def decode(j):
-        try:
-            obj = ReplayKeyboardMarkup(j['keyboard'])
-            if 'resize_keyboard' in j:
-                obj.resize_keyboard = j['resize_keyboard']
-            if 'one_time_keyboard' in j:
-                obj.one_time_keyboard = j['one_time_keyboard']
-            if 'selective' in j:
-                obj.selective = j['selective']
-        except KeyError:
-            raise ObjectDecodingException("ReplayKeyboardMarkup", j)
+    def encode(self):
+        out = {'keyboard': self.keyboard}
+        if self.resize_keyboard:
+            out['resize_keyboard'] = self.resize_keyboard
+        if self.one_time_keyboard:
+            out['one_time_keyboard'] = self.one_time_keyboard
 
-        return obj
+        return json.dumps(out)

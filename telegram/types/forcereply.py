@@ -1,3 +1,6 @@
+import json
+
+
 class ForceReplay:
     def __init__(self, force_reply, selective=None):
         self.force_reply = force_reply
@@ -8,4 +11,4 @@ class ForceReplay:
         if self.selective:
             out['selective'] = self.selective
 
-        return out
+        return json.dumps(out)

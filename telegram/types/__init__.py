@@ -15,7 +15,7 @@ from .update import Update
 from .user import User
 from .userprofilephotos import UserProfilePhotos
 from .video import Video
-from .voice import Voice\
+from .voice import Voice
 
 
 __all__ = ['Audio', 'Chat', 'Contact', 'Document', 'File', 'Location',
