@@ -9,6 +9,7 @@ class TelegramAPI:
 
     def __init__(self, token):
         self._token = token
+        self._url = "%sbot%s/" % (TelegramAPI.TELEGRAM_URL, self._token)
 
     def getMe(self):
         j = TelegramAPI._sendRequest(self._getUrl('getMe'))
@@ -142,9 +143,16 @@ class TelegramAPI:
             ris.append(Update.decode(el))
         return ris
 
+    def setWebhook(self, url=None, certificate_path=None):
+        if certificate_path:
+            files = {'certificate': open(certificate_path, 'rb')}
+        else:
+            files = {}
+        TelegramAPI._sendRequest(self._getUrl('setWebhook'), files=files,
+                                 url=url)
+
     def _getUrl(self, method):
-        url = "%sbot%s/%s?" % (TelegramAPI.TELEGRAM_URL, self._token, method)
-        return url
+        return self._url + method
 
     @staticmethod
     def _sendRequest(url, files={}, is_file_path=True, **kwargs):

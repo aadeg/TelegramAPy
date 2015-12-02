@@ -8,14 +8,14 @@ from .forcereply import ForceReplay
 from .location import Location
 from .message import Message
 from .photosize import PhotoSize
+from .replaykeyboardhide import ReplayKeyboardHide
+from .replaykeyboardmarkup import ReplayKeyboardMarkup
 from .sticker import Sticker
+from .update import Update
 from .user import User
 from .userprofilephotos import UserProfilePhotos
 from .video import Video
-from .voice import Voice
-from .replaykeyboardhide import ReplayKeyboardHide
-from .replaykeyboardmarkup import ReplayKeyboardMarkup
-from .update import Update
+from .voice import Voice\
 
 
 __all__ = ['Audio', 'Chat', 'Contact', 'Document', 'File', 'Location',
