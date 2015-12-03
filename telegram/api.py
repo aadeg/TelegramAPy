@@ -1,7 +1,7 @@
 import requests
 
-from exception import TelegramException
-from types import Message, User, UserProfilePhotos, File, Update
+from .exception import TelegramException
+from .types import Message, User, UserProfilePhotos, File, Update
 
 
 class TelegramAPI:
