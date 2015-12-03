@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from telegram.exception import ObjectDecodingException
+from ..exception import ObjectDecodingException
 from .chat import Chat
 from .user import User
 from .audio import Audio

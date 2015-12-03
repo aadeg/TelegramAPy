@@ -1,4 +1,4 @@
-from telegram.exception import ObjectDecodingException
+from ..exception import ObjectDecodingException
 from .photosize import PhotoSize
 
 
