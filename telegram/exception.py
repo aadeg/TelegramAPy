@@ -26,6 +26,11 @@ class TelegramException(Exception):
         return repr(self.info)
 
 
+class InvalidTokenException(TelegramException):
+    def __init__(self):
+        TelegramException.__init__(self, "Invalid Token")
+
+
 class ObjectDecodingException(TelegramException):
     MSG = "Exception trying to decode a %s object."
 

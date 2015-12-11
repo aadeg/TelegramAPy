@@ -16,14 +16,16 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 '''
+import re
 import requests
 
-from .exception import TelegramException
+from .exception import TelegramException, InvalidTokenException
 from .types import Message, User, UserProfilePhotos, File, Update
 
 
 class TelegramAPI:
-    TELEGRAM_URL = "https://api.telegram.org/"
+    TOKEN_REGEX = r'^[0-9]+\:[a-zA-Z0-9_\-]+$'
+    TELEGRAM_URL = 'https://api.telegram.org/'
 
     METHOD_GETME = 'getMe'
     METHOD_SENDMESSAGE = 'sendMessage'
@@ -42,6 +44,9 @@ class TelegramAPI:
     METHOD_SETWEBHOOK = 'setWebhook'
 
     def __init__(self, token):
+        if re.match(TelegramAPI.TOKEN_REGEX, token) is None:
+            raise InvalidTokenException()
+
         self._token = token
         self._url = "%sbot%s/" % (TelegramAPI.TELEGRAM_URL, self._token)
 
