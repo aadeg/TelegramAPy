@@ -7,6 +7,22 @@ from .types import Message, User, UserProfilePhotos, File, Update
 class TelegramAPI:
     TELEGRAM_URL = "https://api.telegram.org/"
 
+    METHOD_GETME = 'getMe'
+    METHOD_SENDMESSAGE = 'sendMessage'
+    METHOD_FORWARDMESSAGE = 'forwardMessage'
+    METHOD_SENDPHOTO = 'sendPhoto'
+    METHOD_SENDAUDIO = 'sendAudio'
+    METHOD_SENDDOCUMENT = 'sendDocument'
+    METHOD_SENDSTICKER = 'sendSticker'
+    METHOD_SENDVIDEO = 'sendVideo'
+    METHOD_SENDVOICE = 'sendVoice'
+    METHOD_SENDLOCATION = 'sendLocation'
+    METHOD_SENDCHATACTION = 'sendChatAction'
+    METHOD_GETUSERPROFILEPHOTOS = 'getUserProfilePhotos'
+    METHOD_GETFILE = 'getFile'
+    METHOD_GETUPDATES = 'getUpdates'
+    METHOD_SETWEBHOOK = 'setWebhook'
+
     def __init__(self, token):
         self._token = token
         self._url = "%sbot%s/" % (TelegramAPI.TELEGRAM_URL, self._token)
@@ -20,18 +36,18 @@ class TelegramAPI:
                     reply_markup=None):
         rep_markup = reply_markup.encode() if reply_markup else None
         j = TelegramAPI._sendRequest(
-                self._getUrl('sendMessage'), chat_id=chat_id, text=text,
-                parse_mode=parse_mode, reply_to_message_id=reply_to_message_id,
+                self._getUrl(TelegramAPI.METHOD_SENDMESSAGE),
+                chat_id=chat_id, text=text, parse_mode=parse_mode,
+                reply_to_message_id=reply_to_message_id,
                 disable_web_page_preview=disable_web_page_preview,
                 reply_markup=rep_markup)
 
         return Message.decode(j)
 
     def forwardMessage(self, chat_id, from_chat_id, message_id):
-        j = TelegramAPI._sendRequest(self._getUrl('forwardMessage'),
-                                     chat_id=chat_id,
-                                     from_chat_id=from_chat_id,
-                                     message_id=message_id)
+        j = TelegramAPI._sendRequest(
+            self._getUrl(TelegramAPI.METHOD_FORWARDMESSAGE),
+            chat_id=chat_id, from_chat_id=from_chat_id, message_id=message_id)
         return Message.decode(j)
 
     def sendPhoto(self, chat_id, photo, is_path=True, caption=None,
@@ -40,7 +56,7 @@ class TelegramAPI:
             files = {'photo': open(photo, 'rb')}
         else:
             files = {'photo': photo}
-        j = TelegramAPI._sendRequest(self._getUrl('sendPhoto'),
+        j = TelegramAPI._sendRequest(self._getUrl(TelegramAPI.METHOD_SENDPHOTO),
                                      chat_id=chat_id, files=files,
                                      is_file_path=is_path, caption=caption,
                                      replay_markup=replay_markup,
@@ -55,7 +71,7 @@ class TelegramAPI:
             files = {'audio': open(audio, 'rb')}
         else:
             files = {'audio': audio}
-        j = TelegramAPI._sendRequest(self._getUrl('sendAudio'),
+        j = TelegramAPI._sendRequest(self._getUrl(TelegramAPI.METHOD_SENDAUDIO),
                                      chat_id=chat_id, files=files,
                                      is_file_path=is_path, duration=duration,
                                      performer=performer, title=title,
@@ -69,11 +85,11 @@ class TelegramAPI:
             files = {'document': open(document, 'rb')}
         else:
             files = {'document': document}
-        j = TelegramAPI._sendRequest(self._getUrl('sendDocument'),
-                                     files=files, is_file_path=is_path,
-                                     chat_id=chat_id,
-                                     replay_markup=replay_markup,
-                                     reply_to_message_id=reply_to_message_id)
+        j = TelegramAPI._sendRequest(
+            self._getUrl(TelegramAPI.METHOD_SENDDOCUMENT),
+            files=files, is_file_path=is_path, chat_id=chat_id,
+            replay_markup=replay_markup,
+            reply_to_message_id=reply_to_message_id)
         return Message.decode(j)
 
     def sendSticker(self, chat_id, sticker, is_path=True,
@@ -82,11 +98,10 @@ class TelegramAPI:
             files = {'sticker': open(sticker, 'rb')}
         else:
             files = {'sticker': sticker}
-        j = TelegramAPI._sendRequest(self._getUrl('sendSticker'),
-                                     files=files, is_file_path=is_path,
-                                     chat_id=chat_id,
-                                     replay_markup=replay_markup,
-                                     reply_to_message_id=reply_to_message_id)
+        j = TelegramAPI._sendRequest(
+            self._getUrl(TelegramAPI.METHOD_SENDSTICKER), files=files,
+            is_file_path=is_path, chat_id=chat_id, replay_markup=replay_markup,
+            reply_to_message_id=reply_to_message_id)
         return Message.decode(j)
 
     def sendVideo(self, chat_id, video, is_path=True, duration=None,
@@ -95,7 +110,7 @@ class TelegramAPI:
             files = {'video': open(video, 'rb')}
         else:
             files = {'video': video}
-        j = TelegramAPI._sendRequest(self._getUrl('sendVideo'),
+        j = TelegramAPI._sendRequest(self._getUrl(TelegramAPI.METHOD_SENDVIDEO),
                                      files=files, is_file_path=is_path,
                                      chat_id=chat_id, duration=duration,
                                      caption=caption,
@@ -109,40 +124,41 @@ class TelegramAPI:
             files = {'voice': open(voice, 'rb')}
         else:
             files = {'voice': voice}
-        j = TelegramAPI._sendRequest(self._getUrl('sendVoice'),
+        j = TelegramAPI._sendRequest(self._getUrl(TelegramAPI.METHOD_SENDVOICE),
                                      files=files, is_file_path=is_path,
                                      chat_id=chat_id, duration=duration,
                                      replay_markup=replay_markup,
                                      reply_to_message_id=reply_to_message_id)
         return Message.decode(j)
 
-    def sendLcation(self, chat_id, latitude, longitude,
+    def sendLocation(self, chat_id, latitude, longitude,
                     reply_to_message_id=None, replay_markup=None):
-        j = TelegramAPI._sendRequest(self._getUrl('sendLcation'),
-                                     chat_id=chat_id, latitude=latitude,
-                                     longitude=longitude,
-                                     replay_markup=replay_markup,
-                                     reply_to_message_id=reply_to_message_id)
+        j = TelegramAPI._sendRequest(
+            self._getUrl(TelegramAPI.METHOD_SENDLOCATION), chat_id=chat_id,
+            latitude=latitude, longitude=longitude, replay_markup=replay_markup,
+            reply_to_message_id=reply_to_message_id)
         return Message.decode(j)
 
     def sendChatAction(self, chat_id, action):
-        TelegramAPI._sendRequest(self._getUrl('sendChatAction'),
-                                 chat_id=chat_id, action=action)
+        TelegramAPI._sendRequest(
+            self._getUrl(TelegramAPI.METHOD_SENDCHATACTION), chat_id=chat_id,
+            action=action)
 
     def getUserProfilePhotos(self, user_id, offset=None, limit=None):
-        j = TelegramAPI._sendRequest(self._getUrl('getUserProfilePhotos'),
-                                     user_id=user_id, offset=offset,
-                                     limit=limit)
+        j = TelegramAPI._sendRequest(
+            self._getUrl(TelegramAPI.METHOD_GETUSERPROFILEPHOTOS),
+            user_id=user_id, offset=offset, limit=limit)
         return UserProfilePhotos.decode(j)
 
     def getFile(self, file_id):
-        j = TelegramAPI._sendRequest(self._getUrl('getFile'), file_id=file_id)
+        j = TelegramAPI._sendRequest(self._getUrl(TelegramAPI.METHOD_GETFILE),
+                                     file_id=file_id)
         return File.decode(j)
 
     def getUpdates(self, offset=None, limit=None, timeout=None):
-        j = TelegramAPI._sendRequest(self._getUrl('getUpdates'),
-                                     offset=offset, limit=limit,
-                                     timeout=timeout)
+        j = TelegramAPI._sendRequest(
+            self._getUrl(TelegramAPI.METHOD_GETUPDATES), offset=offset,
+            limit=limit, timeout=timeout)
         ris = []
         for el in j:
             ris.append(Update.decode(el))
@@ -153,8 +169,8 @@ class TelegramAPI:
             files = {'certificate': open(certificate_path, 'rb')}
         else:
             files = {}
-        TelegramAPI._sendRequest(self._getUrl('setWebhook'), files=files,
-                                 url=url)
+        TelegramAPI._sendRequest(self._getUrl(TelegramAPI.METHOD_SETWEBHOOK),
+                                 files=files, url=url)
 
     def _getUrl(self, method):
         return self._url + method

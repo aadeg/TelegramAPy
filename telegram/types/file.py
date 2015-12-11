@@ -2,6 +2,10 @@ from ..exception import ObjectDecodingException
 
 
 class File:
+    FIELD_FILEID = 'file_id'
+    FIELD_FILESIZE = 'file_size'
+    FIELD_FILEPATH = 'file_path'
+
     def __init__(self, file_id, file_size=None, file_path=None):
         self.file_id = file_id
         self.file_size = file_size
@@ -10,11 +14,11 @@ class File:
     @staticmethod
     def decode(j):
         try:
-            obj = File(j['file_id'])
-            if 'file_size' in j:
-                obj.file_size = j['file_size']
-            if 'file_path' in j:
-                obj.file_path = j['file_path']
+            obj = File(j[File.FIELD_FILEID])
+            if File.FIELD_FILESIZE in j:
+                obj.file_size = j[File.FIELD_FILESIZE]
+            if File.FIELD_FILEPATH in j:
+                obj.file_path = j[File.FIELD_FILEPATH]
         except KeyError:
             raise ObjectDecodingException("File", j)
 

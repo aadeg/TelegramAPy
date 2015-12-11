@@ -2,6 +2,13 @@ from ..exception import ObjectDecodingException
 
 
 class Audio:
+    FIELD_FILEID = 'file_id'
+    FIELD_DURATION = 'duration'
+    FIELD_PERFORMER = 'performer'
+    FIELD_TITLE = 'title'
+    FIELD_MIMETYPE = 'mime_type'
+    FIELD_FILESIZE = 'file_size'
+
     def __init__(self, file_id, duration, performer=None, title=None,
                  mime_type=None, file_size=None):
         self.file_id = file_id
@@ -14,17 +21,16 @@ class Audio:
     @staticmethod
     def decode(j):
         try:
-            obj = Audio(j['file_id'], j['duration'])
-            if 'performer' in j:
-                obj.performer = j['performer']
-            if 'title' in j:
-                obj.title = j['title']
-            if 'mime_type' in j:
-                obj.mime_type = j['mime_type']
-            if 'file_size' in j:
-                obj.file_size = j['file_size']
+            obj = Audio(j[Audio.FIELD_FILEID], j[Audio.FIELD_DURATION])
+            if Audio.FIELD_PERFORMER in j:
+                obj.performer = j[Audio.FIELD_PERFORMER]
+            if Audio.FIELD_TITLE in j:
+                obj.title = j[Audio.FIELD_TITLE]
+            if Audio.FIELD_MIMETYPE in j:
+                obj.mime_type = j[Audio.FIELD_MIMETYPE]
+            if Audio.FIELD_FILESIZE in j:
+                obj.file_size = j[Audio.FIELD_FILESIZE]
         except KeyError:
             raise ObjectDecodingException("Audio", j)
 
         return obj
-

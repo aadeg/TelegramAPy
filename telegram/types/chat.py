@@ -7,6 +7,13 @@ class Chat:
     T_SUPERGROUP = 'supergroup'
     T_CHANNEL = 'channel'
 
+    FIELD_ID = 'id'
+    FIELD_TYPE = 'type'
+    FIELD_TITLE = 'title'
+    FIELD_USERNAME = 'username'
+    FIELD_FIRSTNAME = 'first_name'
+    FIELD_LASTNAME = 'last_name'
+
     def __init__(self, _id, _type, title=None, username=None,
                  first_name=None, last_name=None):
         self.id = _id
@@ -31,15 +38,15 @@ class Chat:
     @staticmethod
     def decode(j):
         try:
-            obj = Chat(j['id'], j['type'])
-            if 'title' in j:
-                obj.title = j['title']
-            if 'username' in j:
-                obj.username = j['username']
-            if 'first_name' in j:
-                obj.first_name = j['first_name']
-            if 'last_name' in j:
-                obj.last_name = j['last_name']
+            obj = Chat(j[Chat.FIELD_ID], j[Chat.FIELD_TYPE])
+            if Chat.FIELD_TITLE in j:
+                obj.title = j[Chat.FIELD_TITLE]
+            if Chat.FIELD_USERNAME in j:
+                obj.username = j[Chat.FIELD_USERNAME]
+            if Chat.FIELD_FIRSTNAME in j:
+                obj.first_name = j[Chat.FIELD_FIRSTNAME]
+            if Chat.FIELD_LASTNAME in j:
+                obj.last_name = j[Chat.FIELD_LASTNAME]
         except KeyError:
             raise ObjectDecodingException("Chat", j)
 

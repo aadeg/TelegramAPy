@@ -14,6 +14,34 @@ from .location import Location
 
 
 class Message:
+    FIELD_CHAT = 'chat'
+    FIELD_DATE = 'date'
+    FIELD_MESSAGEID = 'message_id'
+    FIELD_FROM = 'from'
+    FIELD_FORWARDFROM = 'forward_from'
+    FIELD_FORWARDDATE = 'forward_date'
+    FIELD_REPLYTOMESSAGE = 'reply_to_message'
+    FIELD_TEXT = 'text'
+    FIELD_AUDIO = 'audio'
+    FIELD_DOCUMENT = 'document'
+    FIELD_PHOTO = 'photo'
+    FIELD_STICKER = 'sticker'
+    FIELD_VIDEO = 'video'
+    FIELD_VOICE = 'voice'
+    FIELD_CAPTION = 'caption'
+    FIELD_CONTACT = 'contact'
+    FIELD_LOCATION = 'location'
+    FIELD_NEWCHATPARTECIPANT = 'new_chat_partecipant'
+    FIELD_LEFTCHATPARTECIPANT = 'left_chat_partecipant'
+    FIELD_NEWCHATTITLE = 'new_chat_title'
+    FIELD_NEWCHATPHOTO = 'new_chat_photo'
+    FIELD_DELETECHATPHOTO = 'delete_chat_photo'
+    FIELD_GROUPCHATCREATED = 'group_chat_created'
+    FIELD_SUPERGROUPCHATCREATED = 'supergroup_chat_created'
+    FIELD_CHANNELCHATCREATED = 'channel_chat_created'
+    FIELD_MIGRATETOCHARID = 'migrate_to_chat_id'
+    FIELD_MIGRATEFROMCHATID = 'migrate_from_chat_id'
+
     def __init__(self, message_id, date, chat, from_=None, forward_from=None,
                  forward_date=None, reply_to_message=None, text=None,
                  audio=None, document=None, photo=None, sticker=None,
@@ -56,65 +84,65 @@ class Message:
     @staticmethod
     def decode(j):
         try:
-            chat = Chat.decode(j['chat'])
-            date = datetime.fromtimestamp(j['date'])
-            obj = Message(j['message_id'], date, chat)
-            if 'from' in j:
-                obj.from_ = User.decode(j['from'])
-            if 'forward_from' in j:
-                obj.forward_from = User.decode(j['forward_from'])
-            if 'forward_date' in j:
+            chat = Chat.decode(j[Message.FIELD_CHAT])
+            date = datetime.fromtimestamp(j[Message.FIELD_DATE])
+            obj = Message(j[Message.FIELD_MESSAGEID], date, chat)
+            if Message.FIELD_FROM in j:
+                obj.from_ = User.decode(j[Message.FIELD_FROM])
+            if Message.FIELD_FORWARDFROM in j:
+                obj.forward_from = User.decode(j[Message.FIELD_FORWARDFROM])
+            if Message.FIELD_FORWARDDATE in j:
                 obj.forward_date = datetime.fromtimestamp(
-                    j['forward_date'])
-            if 'reply_to_message' in j:
+                    j[Message.FIELD_FORWARDDATE])
+            if Message.FIELD_REPLYTOMESSAGE in j:
                 obj.reply_to_message = Message.decode(
-                    j['reply_to_message'])
-            if 'text' in j:
-                obj.text = j['text']
-            if 'audio' in j:
-                obj.audio = Audio.decode(j['audio'])
-            if 'document' in j:
-                obj.document = Document.decode(j['document'])
-            if 'photo' in j:
+                    j[Message.FIELD_REPLYTOMESSAGE])
+            if Message.FIELD_TEXT in j:
+                obj.text = j[Message.FIELD_TEXT]
+            if Message.FIELD_AUDIO in j:
+                obj.audio = Audio.decode(j[Message.FIELD_AUDIO])
+            if Message.FIELD_DOCUMENT in j:
+                obj.document = Document.decode(j[Message.FIELD_DOCUMENT])
+            if Message.FIELD_PHOTO in j:
                 obj.photo = []
-                for el in j['photo']:
+                for el in j[Message.FIELD_PHOTO]:
                     obj.photo.append(PhotoSize.decode(el))
-            if 'sticker' in j:
-                obj.sticker = Sticker.decode(j['sticker'])
-            if 'video' in j:
-                obj.video = Video.decode(j['video'])
-            if 'voice' in j:
-                obj.voice = Voice.decode(j['voice'])
-            if 'caption' in j:
-                obj.caption = j['caption']
-            if 'contact' in j:
-                obj.contact = Contact.decode(j['contact'])
-            if 'location' in j:
-                obj.location = Location.decode(j['location'])
-            if 'new_chat_partecipant' in j:
+            if Message.FIELD_STICKER in j:
+                obj.sticker = Sticker.decode(j[Message.FIELD_STICKER])
+            if Message.FIELD_VIDEO in j:
+                obj.video = Video.decode(j[Message.FIELD_VIDEO])
+            if Message.FIELD_VOICE in j:
+                obj.voice = Voice.decode(j[Message.FIELD_VOICE])
+            if Message.FIELD_CAPTION in j:
+                obj.caption = j[Message.FIELD_CAPTION]
+            if Message.FIELD_CONTACT in j:
+                obj.contact = Contact.decode(j[Message.FIELD_CONTACT])
+            if Message.FIELD_LOCATION in j:
+                obj.location = Location.decode(j[Message.FIELD_LOCATION])
+            if Message.FIELD_NEWCHATPARTECIPANT in j:
                 obj.new_chat_partecipant = User.decode(
-                    j['new_chat_partecipant'])
-            if 'left_chat_partecipant' in j:
+                    j[Message.FIELD_NEWCHATPARTECIPANT])
+            if Message.FIELD_LEFTCHATPARTECIPANT in j:
                 obj.left_chat_partecipant = User.decode(
-                    j['left_chat_partecipant'])
-            if 'new_chat_title' in j:
-                obj.new_chat_title = j['new_chat_title']
-            if 'new_chat_photo' in j:
+                    j[Message.FIELD_LEFTCHATPARTECIPANT])
+            if Message.FIELD_NEWCHATTITLE in j:
+                obj.new_chat_title = j[Message.FIELD_NEWCHATTITLE]
+            if Message.FIELD_NEWCHATPHOTO in j:
                 obj.new_chat_photo = []
-                for el in j['new_chat_photo']:
+                for el in j[Message.FIELD_NEWCHATPHOTO]:
                     obj.new_chat_photo.append(PhotoSize.decode(el))
-            if 'delete_chat_photo' in j:
-                obj.delete_chat_photo = j['delete_chat_photo']
-            if 'group_chat_created' in j:
-                obj.group_chat_created = j['group_chat_created']
-            if 'supergroup_chat_created' in j:
-                obj.supergroup_chat_created = j['supergroup_chat_created']
-            if 'channel_chat_created' in j:
-                obj.channel_chat_created = j['channel_chat_created']
-            if 'migrate_to_chat_id' in j:
-                obj.migrate_to_chat_id = j['migrate_to_chat_id']
-            if 'migrate_from_chat_id' in j:
-                obj.migrate_from_chat_id = j['migrate_from_chat_id']
+            if Message.FIELD_DELETECHATPHOTO in j:
+                obj.delete_chat_photo = j[Message.FIELD_DELETECHATPHOTO]
+            if Message.FIELD_GROUPCHATCREATED in j:
+                obj.group_chat_created = j[Message.FIELD_GROUPCHATCREATED]
+            if Message.FIELD_SUPERGROUPCHATCREATED in j:
+                obj.supergroup_chat_created = j[Message.FIELD_SUPERGROUPCHATCREATED]
+            if Message.FIELD_CHANNELCHATCREATED in j:
+                obj.channel_chat_created = j[Message.FIELD_CHANNELCHATCREATED]
+            if Message.FIELD_MIGRATETOCHARID in j:
+                obj.migrate_to_chat_id = j[Message.FIELD_MIGRATETOCHARID]
+            if Message.FIELD_MIGRATEFROMCHATID in j:
+                obj.migrate_from_chat_id = j[Message.FIELD_MIGRATEFROMCHATID]
         except KeyError:
             raise ObjectDecodingException("Message", j)
 
