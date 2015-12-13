@@ -1,0 +1,41 @@
+{
+    "message_id": 50,
+    "from":
+    {
+        "id": 70021520,
+        "first_name": "Andrea",
+        "last_name": "Giove",
+        "username": "aadeg"
+    },
+    "chat":
+    {
+        "id": 70021520,
+        "first_name": "Andrea",
+        "last_name": "Giove",
+        "username": "aadeg",
+        "type": "private"
+    },
+    "forward_from":
+    {
+        "id": 70021520,
+        "first_name": "Andrea",
+        "last_name": "Giove",
+        "username": "aadeg"
+    },
+    "reply_to_message":
+    {
+        "message_id": 1000,
+        "date": 1450028566,
+        "text": "ReplyMessage",
+        "chat":
+        {
+            "id": 70021520,
+            "first_name": "Andrea",
+            "last_name": "Giove",
+            "username": "aadeg",
+            "type": "private"
+        }
+    },
+    "date": 1450028566,
+    "text": "MessageText"
+}

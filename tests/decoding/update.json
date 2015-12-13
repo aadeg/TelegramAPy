@@ -1,0 +1,24 @@
+{
+    "update_id": 730268726,
+    "message":
+    {
+        "message_id": 45,
+        "from":
+        {
+            "id": 70021520,
+            "first_name": "Andrea",
+            "last_name": "Giove",
+            "username": "aadeg"
+        },
+        "chat":
+        {
+            "id": 70021520,
+            "first_name": "Andrea",
+            "last_name": "Giove",
+            "username": "aadeg",
+            "type": "private"
+        },
+        "date": 1450028272,
+        "text": "Shh"
+    }
+}

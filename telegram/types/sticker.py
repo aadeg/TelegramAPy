@@ -24,8 +24,8 @@ from .photosize import PhotoSize
 class Sticker:
     FIELD_FILEID = 'file_id'
     FIELD_THUMB = 'thumb'
-    FIELD_FILENAME = 'file_name'
-    FIELD_MIMETYPE = 'mime_type'
+    FIELD_WIDTH = 'width'
+    FIELD_HEIGHT = 'height'
     FIELD_FILESIZE = 'file_size'
 
     def __init__(self, file_id, width, height, thumb=None,
@@ -41,11 +41,11 @@ class Sticker:
         try:
             obj = Document(j[Sticker.FIELD_FILEID])
             if Sticker.FIELD_THUMB in j:
-                obj.thumb = PhotoSize.deconde(j[Sticker.FIELD_THUMB])
-            if Sticker.FIELD_FILENAME in j:
-                obj.file_name = j[Sticker.FIELD_FILENAME]
-            if Sticker.FIELD_MIMETYPE in j:
-                obj.mime_type = j[Sticker.FIELD_MIMETYPE]
+                obj.thumb = PhotoSize.decode(j[Sticker.FIELD_THUMB])
+            if Sticker.FIELD_WIDTH in j:
+                obj.width = j[Sticker.FIELD_WIDTH]
+            if Sticker.FIELD_HEIGHT in j:
+                obj.height = j[Sticker.FIELD_HEIGHT]
             if Sticker.FIELD_FILESIZE in j:
                 obj.file_size = j[Sticker.FIELD_FILESIZE]
         except KeyError:

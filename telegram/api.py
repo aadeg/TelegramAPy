@@ -43,6 +43,8 @@ class TelegramAPI:
     METHOD_GETUPDATES = 'getUpdates'
     METHOD_SETWEBHOOK = 'setWebhook'
 
+    MARKDOWN_MODE = "markdown"
+
     def __init__(self, token):
         if re.match(TelegramAPI.TOKEN_REGEX, token) is None:
             raise InvalidTokenException()
