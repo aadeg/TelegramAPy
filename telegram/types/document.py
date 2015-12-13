@@ -40,7 +40,7 @@ class Document:
         try:
             obj = Document(j[Document.FIELD_FILEID])
             if Document.FIELD_THUMB in j:
-                obj.thumb = PhotoSize.deconde(j[Document.FIELD_THUMB])
+                obj.thumb = PhotoSize.decode(j[Document.FIELD_THUMB])
             if Document.FIELD_FILENAME in j:
                 obj.file_name = j[Document.FIELD_FILENAME]
             if Document.FIELD_MIMETYPE in j:

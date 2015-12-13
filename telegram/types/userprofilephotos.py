@@ -34,7 +34,7 @@ class UserProfilePhotos:
             photos = []
             for i in j[UserProfilePhotos.FIELD_PHOTOS]:
                 for k in i:
-                    photos.append(PhotoSize.deconde(k))
+                    photos.append(PhotoSize.decode(k))
 
             obj = UserProfilePhotos(j[UserProfilePhotos.FIELD_TOTALCOUNT],
                                     photos)
