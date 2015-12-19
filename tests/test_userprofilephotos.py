@@ -9,7 +9,7 @@ from telegram.types import UserProfilePhotos, PhotoSize
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')
 class UserProfilePhotosTests(unittest.TestCase):
-    CHATID =  70021520
+    CHATID = 70021520
     DECODE_FILE = os.path.join(DECODING_FILES_PATH,
                                'userprofilephotos.json')
 

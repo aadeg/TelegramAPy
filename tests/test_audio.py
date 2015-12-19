@@ -9,7 +9,7 @@ from telegram.types import Audio
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')
 class AudioTests(unittest.TestCase):
-    CHATID =  70021520
+    CHATID = 70021520
     DECODE_FILE = os.path.join(DECODING_FILES_PATH, 'audio.json')
 
     def __init__(self, *args, **kwargs):
