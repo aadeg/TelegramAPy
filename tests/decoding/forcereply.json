@@ -1,0 +1,6 @@
+{
+	"tests":[
+		"{\"force_reply\": true}",
+		"{\"force_reply\": true, \"selective\": true}"
+	]
+}

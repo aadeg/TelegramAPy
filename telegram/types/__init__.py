@@ -22,7 +22,7 @@ from .chataction import ChatAction
 from .contact import Contact
 from .document import Document
 from .file import File
-from .forcereply import ForceReplay
+from .forcereply import ForceReply
 from .location import Location
 from .message import Message
 from .photosize import PhotoSize
@@ -38,5 +38,5 @@ from .voice import Voice
 
 __all__ = ['Audio', 'Chat', 'Contact', 'Document', 'File', 'Location',
            'PhotoSize', 'Sticker', 'User', 'Video', 'Voice', 'ChatAction',
-           'ReplayKeyboardHide', 'ReplayKeyboardMarkup', 'ForceReplay',
+           'ReplayKeyboardHide', 'ReplayKeyboardMarkup', 'ForceReply',
            'Message', 'UserProfilePhotos', 'Update']

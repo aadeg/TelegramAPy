@@ -23,6 +23,7 @@ class ReplayKeyboardMarkup:
     FIELD_KEYBOARD = 'keyboard'
     FIELD_RESIZEKEYBOARD = 'resize_keyboard'
     FIELD_ONETIMEKEYBOARD = 'one_time_keyboard'
+    FIELD_SELECTIVE = 'selective'
 
     def __init__(self, keyboard, resize_keyboard=None, one_time_keyboard=None,
                  selective=None):
@@ -37,5 +38,7 @@ class ReplayKeyboardMarkup:
             out[ReplayKeyboardMarkup.FIELD_RESIZEKEYBOARD] = self.resize_keyboard
         if self.one_time_keyboard:
             out[ReplayKeyboardMarkup.FIELD_ONETIMEKEYBOARD] = self.one_time_keyboard
+        if self.selective:
+            out[ReplayKeyboardMarkup.FIELD_SELECTIVE] = self.selective
 
         return json.dumps(out)

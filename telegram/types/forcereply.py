@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import json
 
 
-class ForceReplay:
+class ForceReply:
     FIELD_FORCEREPLY = 'force_reply'
     FIELD_SELECTIVE = 'selective'
 
@@ -28,8 +28,8 @@ class ForceReplay:
         self.selective = selective
 
     def encode(self):
-        out = {ForceReplay.FIELD_FORCEREPLY: self.force_reply}
+        out = {ForceReply.FIELD_FORCEREPLY: self.force_reply}
         if self.selective:
-            out[ForceReplay.FIELD_SELECTIVE] = self.selective
+            out[ForceReply.FIELD_SELECTIVE] = self.selective
 
         return json.dumps(out)
