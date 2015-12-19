@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/aadeg/telegramapi.svg?branch=master)](https://travis-ci.org/aadeg/telegramapi)
 # TelegramAPI
 A simple library for interact with the Telegram's API.
 
