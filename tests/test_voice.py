@@ -9,7 +9,6 @@ from telegram.types import Voice
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')
 class VoiceTests(unittest.TestCase):
-    CHATID = 70021520
     DECODE_FILE = os.path.join(DECODING_FILES_PATH, 'voice.json')
 
     def __init__(self, *args, **kwargs):

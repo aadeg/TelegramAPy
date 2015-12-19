@@ -46,7 +46,7 @@ class Video:
             obj = Video(j[Video.FIELD_FILEID], j[Video.FIELD_WIDTH],
                         j[Video.FIELD_HEIGHT], j[Video.FIELD_DURATION])
             if Video.FIELD_THUMB in j:
-                obj.thumb = PhotoSize.deconde(j[Video.FIELD_THUMB])
+                obj.thumb = PhotoSize.decode(j[Video.FIELD_THUMB])
             if Video.FIELD_FILENAME in j:
                 obj.file_name = j[Video.FIELD_FILENAME]
             if Video.FIELD_MIMETYPE in j:

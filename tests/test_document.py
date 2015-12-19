@@ -9,7 +9,6 @@ from telegram.types import Document, PhotoSize
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')
 class DocumentTests(unittest.TestCase):
-    CHATID = 70021520
     DECODE_FILE = os.path.join(DECODING_FILES_PATH, 'document.json')
 
     def __init__(self, *args, **kwargs):

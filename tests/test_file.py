@@ -9,7 +9,6 @@ from telegram.types import File
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')
 class FileTests(unittest.TestCase):
-    CHATID = 70021520
     DECODE_FILE = os.path.join(DECODING_FILES_PATH, 'file.json')
 
     def __init__(self, *args, **kwargs):

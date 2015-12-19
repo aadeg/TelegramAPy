@@ -9,7 +9,6 @@ from telegram.types import Contact
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')
 class ContactTests(unittest.TestCase):
-    CHATID = 70021520
     DECODE_FILE = os.path.join(DECODING_FILES_PATH, 'contact.json')
 
     def __init__(self, *args, **kwargs):

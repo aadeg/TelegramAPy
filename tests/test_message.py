@@ -3,14 +3,14 @@ import os
 import json
 import datetime
 
-from tests import TELEGRAM_TOKEN, SEND_MESSAGES, DECODING_FILES_PATH
+from tests import (TELEGRAM_TOKEN, SEND_MESSAGES, DECODING_FILES_PATH,
+                   TEST_CHAT_ID)
 from telegram.api import TelegramAPI
 from telegram.types import Message, User, Chat
 
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')
 class MessageTests(unittest.TestCase):
-    CHATID = 70021520
     DECODE_FILE = os.path.join(DECODING_FILES_PATH, 'message.json')
 
     def __init__(self, *args, **kwargs):
@@ -20,14 +20,14 @@ class MessageTests(unittest.TestCase):
     @unittest.skipIf(not SEND_MESSAGES, 'Sending messages skipped')
     def test_simple_message(self):
         """Does it send messages correctly?"""
-        msg = self.api.sendMessage(MessageTests.CHATID,
+        msg = self.api.sendMessage(TEST_CHAT_ID,
                                    "test_simple_message")
         self.assertIsInstance(msg, Message)
 
     @unittest.skipIf(not SEND_MESSAGES, 'Sending messages skipped')
     def test_markdown_message(self):
         """Does it send messages with markdown correctly?"""
-        msg = self.api.sendMessage(MessageTests.CHATID,
+        msg = self.api.sendMessage(TEST_CHAT_ID,
                                    "*test_markdown_message*",
                                    parse_mode=TelegramAPI.MARKDOWN_MODE)
         self.assertIsInstance(msg, Message)

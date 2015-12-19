@@ -9,7 +9,6 @@ from telegram.types import Sticker, PhotoSize
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')
 class StickerTests(unittest.TestCase):
-    CHATID = 70021520
     DECODE_FILE = os.path.join(DECODING_FILES_PATH, 'sticker.json')
 
     def __init__(self, *args, **kwargs):
