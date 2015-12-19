@@ -13,4 +13,4 @@ api = TelegramAPI(token)
 
 Now that you have created the instace, you can call all the methods defined in the [Telegram Bot API](https://core.telegram.org/bots/api) page.
 
-This library is updated with the changes of October 28, 2015.
+This library is updated with the changes of November, 2015.
