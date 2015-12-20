@@ -16,3 +16,9 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 '''
+
+__title__ = 'telegramapy'
+__version__ = '0.1.0'
+__author__ = 'Giove Andrea'
+__license__ = 'GNU GPL v2.0'
+__copyright__ = 'Copyright (C) 2015  Giove Andrea'
