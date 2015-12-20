@@ -1,5 +1,5 @@
 '''
-TelegramAPI
+TelegramAPy
 Copyright (C) 2015  Giove Andrea
 
 This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import json
 import os
 
 from tests import TELEGRAM_TOKEN, DECODING_FILES_PATH
-from telegram.api import TelegramAPI
+from telegram.api import TelegramAPy
 from telegram.types import Update, Message
 
 
@@ -31,7 +31,7 @@ class UpdatesTests(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         unittest.TestCase.__init__(self, *args, **kwargs)
-        self.api = TelegramAPI(TELEGRAM_TOKEN)
+        self.api = TelegramAPy(TELEGRAM_TOKEN)
 
     def test_get_updates(self):
         upds = self.api.getUpdates()

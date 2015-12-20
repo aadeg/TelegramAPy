@@ -1,5 +1,5 @@
 '''
-TelegramAPI
+TelegramAPy
 Copyright (C) 2015  Giove Andrea
 
 This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import os
 import json
 
 from tests import TELEGRAM_TOKEN, DECODING_FILES_PATH
-from telegram.api import TelegramAPI
+from telegram.api import TelegramAPy
 from telegram.types import Document, PhotoSize
 
 
@@ -31,7 +31,7 @@ class DocumentTests(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         unittest.TestCase.__init__(self, *args, **kwargs)
-        self.api = TelegramAPI(TELEGRAM_TOKEN)
+        self.api = TelegramAPy(TELEGRAM_TOKEN)
 
     def test_photosize_decode(self):
         with open(DocumentTests.DECODE_FILE) as json_file:

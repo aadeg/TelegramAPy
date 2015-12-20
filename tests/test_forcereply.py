@@ -1,5 +1,5 @@
 '''
-TelegramAPI
+TelegramAPy
 Copyright (C) 2015  Giove Andrea
 
 This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import os
 import json
 
 from tests import TELEGRAM_TOKEN, DECODING_FILES_PATH
-from telegram.api import TelegramAPI
+from telegram.api import TelegramAPy
 from telegram.types import ForceReply
 
 

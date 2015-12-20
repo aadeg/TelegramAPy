@@ -1,5 +1,5 @@
 '''
-TelegramAPI
+TelegramAPy
 Copyright (C) 2015  Giove Andrea
 
 This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,7 @@ import datetime
 
 from tests import (TELEGRAM_TOKEN, SEND_MESSAGES, DECODING_FILES_PATH,
                    TEST_CHAT_ID)
-from telegram.api import TelegramAPI
+from telegram.api import TelegramAPy
 from telegram.types import Message, User, Chat
 
 
@@ -33,7 +33,7 @@ class MessageTests(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         unittest.TestCase.__init__(self, *args, **kwargs)
-        self.api = TelegramAPI(TELEGRAM_TOKEN)
+        self.api = TelegramAPy(TELEGRAM_TOKEN)
 
     @unittest.skipIf(not SEND_MESSAGES, 'Sending messages skipped')
     def test_simple_message(self):
@@ -47,7 +47,7 @@ class MessageTests(unittest.TestCase):
         """Does it send messages with markdown correctly?"""
         msg = self.api.sendMessage(TEST_CHAT_ID,
                                    "*test_markdown_message*",
-                                   parse_mode=TelegramAPI.MARKDOWN_MODE)
+                                   parse_mode=TelegramAPy.MARKDOWN_MODE)
         self.assertIsInstance(msg, Message)
 
     def test_message_decode(self):

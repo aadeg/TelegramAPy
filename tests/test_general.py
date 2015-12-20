@@ -1,5 +1,5 @@
 '''
-TelegramAPI
+TelegramAPy
 Copyright (C) 2015  Giove Andrea
 
 This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import unittest
 
 from tests import TELEGRAM_TOKEN
-from telegram.api import TelegramAPI
+from telegram.api import TelegramAPy
 from telegram.exception import TelegramException, InvalidTokenException
 
 
@@ -27,7 +27,7 @@ from telegram.exception import TelegramException, InvalidTokenException
 class GeneralTests(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(GeneralTests, self).__init__(*args, **kwargs)
-        self.api = TelegramAPI(TELEGRAM_TOKEN)
+        self.api = TelegramAPy(TELEGRAM_TOKEN)
 
     def test_token(self):
         """Does work with correct token?"""
@@ -36,10 +36,10 @@ class GeneralTests(unittest.TestCase):
     def test_invalid_token(self):
         """Does raise exception with invalid token?"""
         with self.assertRaises(InvalidTokenException):
-            TelegramAPI("wrongtoken")
+            TelegramAPy("wrongtoken")
 
     def test_wrong_token(self):
         """Does raise exception with invalid token?"""
-        w_api = TelegramAPI("123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11")
+        w_api = TelegramAPy("123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11")
         with self.assertRaises(TelegramException):
             w_api.getMe()
