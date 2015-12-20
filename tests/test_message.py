@@ -23,8 +23,8 @@ import datetime
 
 from tests import (TELEGRAM_TOKEN, SEND_MESSAGES, DECODING_FILES_PATH,
                    TEST_CHAT_ID)
-from telegram.api import TelegramAPy
-from telegram.types import Message, User, Chat
+from telegramapy.api import TelegramAPy
+from telegramapy.types import Message, User, Chat
 
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')

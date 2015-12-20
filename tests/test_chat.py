@@ -21,7 +21,7 @@ import os
 import json
 
 from tests import DECODING_FILES_PATH
-from telegram.types import Chat
+from telegramapy.types import Chat
 
 
 class ChatTests(unittest.TestCase):

@@ -21,8 +21,8 @@ import os
 import json
 
 from tests import TELEGRAM_TOKEN, DECODING_FILES_PATH
-from telegram.api import TelegramAPy
-from telegram.types import ForceReply
+from telegramapy.api import TelegramAPy
+from telegramapy.types import ForceReply
 
 
 class ForceReplyTests(unittest.TestCase):

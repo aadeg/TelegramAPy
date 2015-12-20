@@ -21,8 +21,8 @@ import json
 import os
 
 from tests import TELEGRAM_TOKEN, DECODING_FILES_PATH
-from telegram.api import TelegramAPy
-from telegram.types import Update, Message
+from telegramapy.api import TelegramAPy
+from telegramapy.types import Update, Message
 
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')

@@ -21,7 +21,7 @@ import os
 import json
 
 from tests import DECODING_FILES_PATH
-from telegram.types import User
+from telegramapy.types import User
 
 
 class UserTests(unittest.TestCase):

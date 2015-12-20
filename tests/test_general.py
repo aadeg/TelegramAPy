@@ -19,8 +19,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import unittest
 
 from tests import TELEGRAM_TOKEN
-from telegram.api import TelegramAPy
-from telegram.exception import TelegramException, InvalidTokenException
+from telegramapy.api import TelegramAPy
+from telegramapy.exception import TelegramException, InvalidTokenException
 
 
 @unittest.skipIf(TELEGRAM_TOKEN is None, 'Unable to get Telegram token')
