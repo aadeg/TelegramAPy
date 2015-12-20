@@ -51,6 +51,8 @@ class TelegramAPy:
 
         self._token = token
         self._url = "%sbot%s/" % (TelegramAPy.TELEGRAM_URL, self._token)
+        self._file_url = "%sfile/bot%s/" % (TelegramAPy.TELEGRAM_URL,
+                                            self._token)
 
     def getMe(self):
         j = TelegramAPy._sendRequest(self._getUrl('getMe'))
@@ -196,6 +198,15 @@ class TelegramAPy:
             files = {}
         TelegramAPy._sendRequest(self._getUrl(TelegramAPy.METHOD_SETWEBHOOK),
                                  files=files, url=url)
+
+    def downloadFile(self, file_, file_path):
+        req = requests.get(self._file_url + file_.file_path, stream=True)
+        if req.status_code == 200:
+            with open(file_path, 'wb') as f:
+                for chunk in req:
+                    f.write(chunk)
+        else:
+            raise TelegramException('Unable to download file.')
 
     def _getUrl(self, method):
         return self._url + method
