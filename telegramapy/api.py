@@ -450,17 +450,17 @@ class TelegramAPy:
         return self._url + method
 
     @staticmethod
-    def _sendRequest(url, files={}, is_file_path=True, **kwargs):
+    def _sendRequest(url_, files={}, is_file_path=True, **kwargs):
         data = {}
         for key, value in kwargs.iteritems():
             if value:
                 data[key] = value
 
         if is_file_path:
-            req = requests.post(url, files=files, data=data)
+            req = requests.post(url_, files=files, data=data)
         else:
             kwargs.update(files)
-            req = requests.post(url, data=data)
+            req = requests.post(url_, data=data)
         j = req.json()
 
         if 'ok' not in j or not j['ok']:
