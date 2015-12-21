@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/aadeg/telegramapi.svg?branch=master)](https://travis-ci.org/aadeg/telegramapi)
+[![Build Status](https://travis-ci.org/aadeg/TelegramAPy.svg?branch=master)](https://travis-ci.org/aadeg/TelegramAPy)
 # TelegramAPy
 A simple library for interacting with the [Telegram Bot API](https://core.telegram.org/bots/api).
 
