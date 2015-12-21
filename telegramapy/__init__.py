@@ -18,7 +18,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 '''
 
 __title__ = 'telegramapy'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 __author__ = 'Giove Andrea'
 __license__ = 'GNU GPL v2.0'
 __copyright__ = 'Copyright (C) 2015  Giove Andrea'

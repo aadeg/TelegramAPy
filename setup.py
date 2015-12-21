@@ -6,7 +6,7 @@ packages = [
 ]
 
 setup(name='telegramapy',
-      version='0.1.1',
+      version='0.1.2',
       description='Library for interacting with the Telegram Bot API.',
       url='https://github.com/aadeg/TelegramAPy',
       author='Giove Andrea',
