@@ -1,5 +1,10 @@
 from setuptools import setup
 
+packages = [
+    'telegramapy',
+    'telegramapy.types'
+]
+
 setup(name='telegramapy',
       version='0.1.0',
       description='Library for interacting with the Telegram Bot API.',
@@ -7,8 +12,8 @@ setup(name='telegramapy',
       author='Giove Andrea',
       author_email='andreagiove@outlook.com',
       license='GNU GPL v2.0',
-      packages=['telegramapy'],
+      packages=packages,
       install_requires=[
-        'requests'
+          'requests'
       ],
       zip_safe=False)
